@@ -2,6 +2,8 @@
 // Here are some query pulls
 generationArea = document.querySelector("#generation");
 generateImage = document.querySelector("#generation-image");
+generateButton = document.querySelector("#generate-button");
+
 
 // Okay I'm going to get started with the Generation fetch code (Which might make Josh's fetch part redundant but we'll cross that bridge when we get there)
 // This is our first of two fetches -- This one will grab just a random Pokemon in general
@@ -11,10 +13,13 @@ fetch("https://pokeapi.co/api/v2/pokemon?offset=100&limit=1000")
 .then(data =>{
   //  console.log(data.results[0]) <!-- This pulls Bulbasaur so it's working :) --!>
 generateRandomPokemon(data);
+        generateButton.addEventListener('click', event =>{
+            generateRandomPokemon(data);
+        })
 })
 
 function generateRandomPokemon(data){
-    randomPokeNumber = Math.floor(Math.random() * 1000); // This will select a random number between 0-20 which will be our pokemon ID
+    randomPokeNumber = Math.floor(Math.random() * 1000); // This will select a random number between 0-100 which will be our pokemon ID
     randomPokemon = data.results[randomPokeNumber]
     console.log(randomPokemon);
     randomPokeName = data.results[randomPokeNumber].name
@@ -27,3 +32,8 @@ function generateRandomPokemon(data){
         generateImage.src = data.sprites.front_default;
 });
 }
+
+
+// Here is the image url of the pokeball
+// https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png
+// Use this in your forEach();
