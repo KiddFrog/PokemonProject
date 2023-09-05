@@ -1,0 +1,39 @@
+@keyframes squashAndStretch { /* This is my animation function that makes the pokemon grow and shrink on hover  -- Domm*/
+    0%, 100% { /* on the first frame and the last frame it will return to a scale of solid 1 which is it's normal -- Domm */
+        transform: scale(1);
+    }
+    50% { /* At 50% it should transform to these positions over time */
+        transform: scale(1.2, 1.3);
+    }
+}
+
+.teampokemon-image {
+    transition: transform 0.4s; /* Add a smooth transition for a better effect */
+  }
+  
+  .teampokemon-image:hover {
+    animation: squashAndStretch 0.8s ease infinite; /* Apply the animation on hover */
+  }
+
+  #pokeballs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px; /* Adjust the gap between elements as needed */
+    max-width: 10000px; /* Adjust the maximum width of each element as needed */
+    
+}
+
+.teampokemon {
+    width: 100px; /* Adjust the width of each .teampokemon element as needed */
+    text-align: center; /* Center the content within each element */
+    margin-bottom: 10px; /* Add spacing between rows */
+}
+
+#roam {
+    background-image: url('forest.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 300px; /* Adjust the height as needed */
+}

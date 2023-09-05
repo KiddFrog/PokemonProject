@@ -37,8 +37,10 @@ function ballCreation(data) {
   const createStats = document.createElement("p");
   const createButton = document.createElement("button");
   
+  
   createDiv.className = "teampokemon"; 
   createImg.src = data.sprites.front_default;
+  createImg.className = "teampokemon-image"; // Add a class to the image element so we can animate it in CSS -- Domm
   createStats.textContent = `Name: ${data.name} | Base Stat: ${data.stats[0].base_stat}`; // Hope you dont mind Josh I made this one line to make it cleaner -- Domm
   createButton.textContent = "Release";
   
@@ -71,6 +73,7 @@ fetch("https://pokeapi.co/api/v2/pokemon?offset=100&limit=1000") // We're fetchi
     });
 
     catchButton.addEventListener('click', event => {
+      generateImage.src = pokeballImage;
       catchAndGenerateRandomPokemon(data); // Different than the generateRandomPokemon(data) function because it would screw up which pokemon displayed if we did it using that function -- Domm
     });
   });
