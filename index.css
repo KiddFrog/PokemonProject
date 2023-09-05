@@ -31,9 +31,35 @@
 }
 
 #roam {
-    background-image: url('forest.jpg');
+    background-image: url('./forest.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     min-height: 300px; /* Adjust the height as needed */
 }
+
+#roam img {
+    width: 10%;
+    height: bottom;; /* This will maintain the original aspect ratio */
+    
+  }
+
+#roam img {
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+
+    }
+    50% {
+      transform: translateY(-20px);
+
+    }
+  }
+  
+  #body {
+   
+  }
+  

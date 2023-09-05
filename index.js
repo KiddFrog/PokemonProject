@@ -6,7 +6,7 @@ const generateButton = document.querySelector("#generate-button");
 const catchButton = document.getElementById("catch-button"); // Moved Hannans code here -- Domm
 const pokeballs = document.getElementById("pokeballs");
 const pokeballImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";  // Changed this to a varaiable for easier readability -- Domm
-
+const roamArea = document.getElementById("roam");
 let currentPokemonData = null; // This new addition saves our current data. -- Domm
 
 /*
@@ -36,20 +36,23 @@ function ballCreation(data) {
   const createImg = document.createElement("img");
   const createStats = document.createElement("p");
   const createButton = document.createElement("button");
-  
+  const roamImg = document.createElement("img");
   
   createDiv.className = "teampokemon"; 
   createImg.src = data.sprites.front_default;
   createImg.className = "teampokemon-image"; // Add a class to the image element so we can animate it in CSS -- Domm
   createStats.textContent = `Name: ${data.name} | Base Stat: ${data.stats[0].base_stat}`; // Hope you dont mind Josh I made this one line to make it cleaner -- Domm
   createButton.textContent = "Release";
-  
+  roamImg.src = createImg.src
   createDiv.appendChild(createImg);
   createDiv.appendChild(createStats);
   createDiv.appendChild(createButton);
   pokeballs.appendChild(createDiv);
+
+  roamArea.append(roamImg);
   createButton.addEventListener("click", e => {
     createDiv.remove()
+    roamImg.remove();
 })
 }
 
