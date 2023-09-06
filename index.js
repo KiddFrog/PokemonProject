@@ -5,28 +5,26 @@ const generateImage = document.querySelector("#generation-image");
 const generateButton = document.querySelector("#generate-button");
 const catchButton = document.getElementById("catch-button"); // Moved Hannans code here -- Domm
 const pokeballs = document.getElementById("pokeballs");
-const pokeballImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";  // Changed this to a varaiable for easier readability -- Domm
+const pokeballImage = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";  // Changed this to a variable for easier readability -- Domm
 const roamArea = document.getElementById("roam");
 let currentPokemonData = null; // This new addition saves our current data. -- Domm
 
 /*
-Hey guys, I made a ton of changes to make this code much cleaner, and well implimented. It's generally the same however Hannans part had to be removed for the time being.
-When we get together again let's figure out how to do her part :) -- Domm
+Hey guys, I made a ton of changes to make this code much cleaner and well-implemented. It's generally the same; however, Hannan's part had to be removed for the time being.
+When we get together again, let's figure out how to do her part :) -- Domm
 */
 
 // Function to generate a random Pokemon -- Domm
 function generateRandomPokemon(data) {
   const randomPokeNumber = Math.floor(Math.random() * 1000); // Using floor so we get a full integer and don't have to worry about floats -- Domm
-  const randomPokemon = data.results[randomPokeNumber]; // This will get us the pokemons number ID to use for the next float that fetches the exact pokemons info -- Domm
-  // console.log(randomPokemon);
-  const randomPokeName = randomPokemon.name; // Now we use this variable in our new fetch to get that pokemons sprite, name, weight, criminal record, etc - Domm
-  
-  fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokeName}`) // Using ${} to input our variable name of the Pokemons specific name -- Domm
+  const randomPokemon = data.results[randomPokeNumber]; // This will get us the Pokemon's number ID to use for the next fetch that fetches the exact Pokemon's info -- Domm
+  const randomPokeName = randomPokemon.name; // Now we use this variable in our new fetch to get that Pokemon's sprite, name, weight, criminal record, etc. - Domm
+
+  fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokeName}`) // Using ${} to input our variable name of the Pokemon's specific name -- Domm
     .then(response => response.json())
     .then(data => {
-      currentPokemonData = data; // You wouldn't believe how long this took to figure out, but doing it this way we can keep the data CONSISTENT!! -- Domm
-      generateImage.src = data.sprites.front_default; // front_default is what they called the main sprite lol - Domm
-      console.log(data.name);
+      currentPokemonData = data;
+      generateImage.src = data.sprites.front_default;
     });
 }
 
@@ -40,56 +38,88 @@ function ballCreation(data) {
   
   createDiv.className = "teampokemon"; 
   createImg.src = data.sprites.front_default;
-  createImg.className = "teampokemon-image"; // Add a class to the image element so we can animate it in CSS -- Domm
-  createStats.textContent = `Name: ${data.name} | Base Stat: ${data.stats[0].base_stat}`; // Hope you dont mind Josh I made this one line to make it cleaner -- Domm
+  createImg.className = "teampokemon-image";
+  createStats.textContent = `Name: ${data.name} | Base Stat: ${data.stats[0].base_stat}`;
   createButton.textContent = "Release";
-  roamImg.src = createImg.src
+  roamImg.src = createImg.src;
+  roamImg.className = "roam-image";
   createDiv.appendChild(createImg);
   createDiv.appendChild(createStats);
   createDiv.appendChild(createButton);
   pokeballs.appendChild(createDiv);
 
   roamArea.append(roamImg);
+  // Start the animation after appending roamImg
+  animateRoam();
   createButton.addEventListener("click", e => {
-    createDiv.remove()
+    createDiv.remove();
     roamImg.remove();
-})
+  });
 }
 
-// Function to capture the current Pokemon and generate a new random one. This was the only way to get this to work with our current code -- Domm
+// Function to capture the current Pokemon and generate a new random one.
 function catchAndGenerateRandomPokemon(data) {
   if (currentPokemonData) {
-    ballCreation(currentPokemonData); // Hannan I'm trying something new out here to make things work. Feel free to try something else here if you like -- Domm
+    ballCreation(currentPokemonData);
   }
 
   generateRandomPokemon(data);
 }
 
-// Fetch the initial data. I moved this into it's own section entirely for the sake of being clean -- Domm
-fetch("https://pokeapi.co/api/v2/pokemon?offset=100&limit=1000") // We're fetching a list of the pokemon from 0-1000 (There is more believe it or not lol) -- Domm
+// Fetch the initial data.
+fetch("https://pokeapi.co/api/v2/pokemon?offset=100&limit=1000")
   .then(response => response.json())
   .then(data => {
     generateRandomPokemon(data);
 
-    generateButton.addEventListener('click', event => { // This is it's OWN function for THIS part and for the intial creation -- Domm
+    generateButton.addEventListener('click', event => {
       generateRandomPokemon(data);
     });
 
     catchButton.addEventListener('click', event => {
       generateImage.src = pokeballImage;
-      catchAndGenerateRandomPokemon(data); // Different than the generateRandomPokemon(data) function because it would screw up which pokemon displayed if we did it using that function -- Domm
+      catchAndGenerateRandomPokemon(data);
     });
   });
 
+function animateRoam() {
+  console.log("animateRoam function called");
+  const roamingImages = document.querySelectorAll(".roam-image");
+  roamingImages.forEach(roamImg => {
+    let x = Math.random() * (roamArea.clientWidth - roamImg.clientWidth);
+    let y = Math.random() * (roamArea.clientHeight - roamImg.clientHeight);
+    let xSpeed = 1;
+    let ySpeed = 1;
 
+    function step() {
+      x += xSpeed;
+      y += ySpeed;
 
-  // Hannan I moved your code down here and commented it out since we changed tactics -- Domm
-  // If you want to re-impliment it, you'll have to restructure it to fit the current code -- Domm
-//   const catchButton = document.getElementById("catch-button")
-// catchButton.addEventListener( "click", event =>{
-//     const img = document.createElement("img")
-// img.src = " https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
-// pokeballs.appendChild(img)
+      if (x + roamImg.clientWidth >= roamArea.clientWidth || x <= 0) {
+        xSpeed *= -1;
+      }
+      if (y + roamImg.clientHeight >= roamArea.clientHeight || y <= 0) {
+        ySpeed *= -1;
+      }
 
+      if (x < 0) {
+        x = 0;
+      } else if (x + roamImg.clientWidth > roamArea.clientWidth) {
+        x = roamArea.clientWidth - roamImg.clientWidth;
+      }
 
-//     generateRandomPokemon(data)
+      if (y < 0) {
+        y = 0;
+      } else if (y + roamImg.clientHeight > roamArea.clientHeight) {
+        y = roamArea.clientHeight - roamImg.clientHeight;
+      }
+
+      roamImg.style.left = x + 'px';
+      roamImg.style.top = y + 'px';
+
+      requestAnimationFrame(step);
+    }
+
+    step();
+  });
+}
