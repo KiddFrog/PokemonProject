@@ -17,7 +17,11 @@
 .teampokemon-image:hover {
     animation: squashAndStretch 0.8s ease infinite;
 }
-
+/* .generate-button:active{ /* Trying to see if we can NEST inside of CSS. Hope so -- Domm */
+    /* #generation-image { */
+        /* animation: squashAndStretch 1s ease infinite; */
+    /* } */
+/* } okay this didnt work but I might come back to it later -- Domm
 /* Styling for the pokeballs container */
 #pokeballs {
     display: flex;
@@ -47,7 +51,8 @@
     position: absolute; /* Position .roam-image elements absolutely within #roam */
     width: 50px;
     height: 50px;
-    animation: roam 2s infinite;
+    animation: roam 5s infinite;
+    animation: squashAndStretch 1s ease infinite;
 }
 
 /* Keyframes animation for roaming images */
