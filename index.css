@@ -1,3 +1,54 @@
+#intro{
+    color: yellow;  
+}
+
+
+body {background-color: rgb(41, 41, 41);}
+#h1 {
+    color: yellow;
+}
+#generation-image {
+    width:300px;
+}
+#catch-button, #generate-button {
+    background-color: white;
+    padding:5px 10px;
+    font-size: medium;
+
+}
+#createImg {
+    width:200px;
+    border-radius: 0.5%;
+}
+#createStats{
+    color:yellow;
+    font-style: italic;
+    font-size: medium;
+}
+
+#pokeballs{
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.teampokemon{ 
+    border:1px solid yellow;
+    text-align: center;
+    width: 200px;
+    background-color: rgb(85, 85, 85);
+    margin: 20px;
+
+
+}
+#createButton {
+    background-color: white;
+    padding:5px 10px;
+    font-size: medium;
+
+
+}
+
 /* Keyframes animation for squash and stretch */
 @keyframes squashAndStretch {
     0%, 100% {
@@ -63,9 +114,4 @@
     50% {
         transform: translate(-20px, -20px);
     }
-<<<<<<< Updated upstream
 }
-=======
-  }
-  
->>>>>>> Stashed changes
